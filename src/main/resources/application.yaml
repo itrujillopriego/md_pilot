@@ -1,0 +1,92 @@
+form-flow:
+  design-system:
+    name: honeycrisp
+  languages: en, es
+  flow:
+    ubi:
+      email:
+        confirmation:
+          cc:
+          bcc:
+  session-continuity-interceptor:
+    enabled: true
+  encryption-key: '{"primaryKeyId":2135185311,"key":[{"keyData":{"typeUrl":"type.googleapis.com/google.crypto.tink.AesGcmKey","value":"GiCRKaXiJ/zlDHAZfRQf1rCIbIY4fFmLqLWYIPLNXpOx4A==","keyMaterialType":"SYMMETRIC"},"status":"ENABLED","keyId":2135185311,"outputPrefixType":"TINK"}]}"'
+  inputs: 'org.formflowstartertemplate.app.inputs.'
+  uploads:
+    accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
+    thumbnail-width: '64'
+    thumbnail-height: '60'
+    # 20 files maximum
+    max-files: '20'
+    # 20 MB file size limit
+    # If this is not set then the server values below for servlet max-file-size and tomcat max POST size will not be set
+    # which will cause the server to use the default values of 1MB preventing uploads larger than that.
+    max-file-size: '20'
+    virus-scanning:
+      enabled: false
+      service-url: ${CLAMAV_URL}
+      block-if-unreachable: true
+  aws:
+    region: 'us-west-1'
+    s3_bucket_name: 'form-flow'
+    access_key: ${AWS_ACCESS_KEY}
+    secret_key: ${AWS_SECRET_KEY}
+  address-validation:
+    smarty:
+      auth-id: ${SMARTY_AUTH_ID}
+      auth-token: ${SMARTY_AUTH_TOKEN}
+      license: us-core-cloud
+  pdf:
+    path: 'src/main/resources/pdfs/'
+    map-file: pdf-map.yaml
+  email-client:
+    mailgun:
+      key: ${MAILGUN_KEY:'no-key-set'}
+      domain: 'mail.forms-starter.cfa-platforms.org'
+      sender-email: 'UBI Demo <demo@mail.forms-starter.cfa-platforms.org>'
+  error:
+    show-stack-trace: true
+    pretty-print-packages: formflow,formflowstartertemplate
+spring:
+  profiles:
+    group:
+      test:
+        - test
+        - form-flow-library
+      dev:
+        - dev
+        - form-flow-library
+      demo:
+        - demo
+        - form-flow-library
+  thymeleaf:
+    cache: false
+    template-resolver-order: 0
+    check-template-location: true
+  # TODO: move caching 0 to a dev only context?
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0
+  datasource:
+    url: jdbc:postgresql://localhost:5432/starter-app
+    username: starter-app
+    password:
+  servlet:
+    multipart:
+      max-file-size: ${form-flow.uploads.max-file-size}MB
+      max-request-size: ${form-flow.uploads.max-file-size}MB
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+server:
+  tomcat:
+    max-http-form-post-size: ${form-flow.uploads.max-file-size}MB
+  error:
+    whitelabel:
+      enabled: false
+management:
+  endpoints:
+    enabled-by-default: false

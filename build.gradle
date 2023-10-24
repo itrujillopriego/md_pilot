@@ -1,0 +1,85 @@
+plugins {
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.1.3'
+    id 'java'
+    id 'com.gorylenko.gradle-git-properties' version '2.4.1'
+    id 'com.adarshr.test-logger' version '4.0.0'
+    id 'jacoco'
+    id "org.flywaydb.flyway" version "9.22.3"
+}
+
+jacoco {
+    toolVersion = '0.8.10'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+configurations.configureEach {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+def props = new Properties()
+if (file(".env").exists()) {
+    file(".env").withInputStream { props.load(it) }
+}
+
+repositories {
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+    mavenCentral()
+}
+
+def profile = props.getProperty('SPRING_PROFILES_ACTIVE')
+def formFlowLibraryVersion = '0.0.15-SNAPSHOT'
+def useLocalLibrary = System.getenv('USE_LOCAL_LIBRARY')
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
+    implementation 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+
+    if (profile == 'dev' || useLocalLibrary == 'true') {
+        implementation fileTree(dir: "$rootDir/../form-flow/build/libs", include: '*.jar')
+        println "📦 Using local library"
+    } else {
+        implementation "org.codeforamerica.platform:form-flow:${formFlowLibraryVersion}"
+        println "📚Using form flow library ${formFlowLibraryVersion}"
+    }
+
+    compileOnly 'org.projectlombok:lombok'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.seleniumhq.selenium:selenium-java'
+    testImplementation 'io.percy:percy-java-selenium:2.0.1'
+    testImplementation 'org.awaitility:awaitility'
+    testImplementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
+    testImplementation 'com.h2database:h2'
+
+    runtimeOnly 'org.postgresql:postgresql'
+}
+
+springBoot {
+    buildInfo()
+}
+
+test {
+    finalizedBy jacocoTestReport
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}

@@ -1,0 +1,37 @@
+form-flow:
+  uploads:
+    accepted-file-types: '.jpeg,.jpg,.png,.pdf,.bmp,.gif,.doc,.docx,.odt,.ods,.odp'
+    thumbnail-width: '54'
+    thumbnail-height: '50'
+    max-files: '5' # 5 files maximum
+    max-file-size: '1' # 1 MB file size limit
+    virus-scanning:
+      enabled: false
+  address-validation:
+    disabled: true
+    smarty:
+      auth-id: 'test-id'
+      auth-token: 'test-token'
+  email-client:
+    mailgun:
+      sender-email: 'Testing <test@mail.forms-starter.cfa-platforms.org>'
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/starter-app-test
+    username: starter-app-test
+    password: postgres
+    hikari:
+      maximum-pool-size: 2
+  flyway:
+    baselineOnMigrate: true
+    clean-on-validation-error: true
+    placeholders:
+      uuid_function: "gen_random_uuid"
+    clean-disabled: false
+  thymeleaf:
+    prefix: classpath:/templates/
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  main:
+    allow-circular-references: true
