@@ -15,18 +15,75 @@
           <a th:text="#{index.already-applied}" href="#docUpload"></a>
           <div class="spacing-above-35">
             <a
-              th:href="|/flow/ubi/howThisWorks?lang=${#locale.getLanguage()}|"
+              th:href="|/flow/mdpilot/howThisWorks?lang=${#locale.getLanguage()}|"
               th:text="#{index.apply-now}"
               class="button--primary button"></a>
           </div>
           <div class="spacing-below-35">
             <a
               th:with="otherLang=${#locale.getLanguage().equals('es') ? 'en' : 'es'}"
-              th:href="|/flow/ubi/howThisWorks?lang=${otherLang}|"
+              th:href="|/flow/mdpilot/howThisWorks?lang=${otherLang}|"
               th:text="#{index.aplica-ahora}"
               th:lang="${otherLang}"
               class="button--small button"></a>
           </div>
+          <!-- Adding this for MD -->
+<!--          <div class="spacing-below-35">-->
+
+<!--            <fieldset>-->
+<!--              <legend>Please select one of the following</legend>-->
+<!--              <div>-->
+<!--              <input type="checkbox" name="type" id="track" value="track"  /> <label for="track"> {index.benefit-snap}</label><br />-->
+<!--              <input type="checkbox" name="type2" id="event" value="event"  /><label for="event">#{index.benefit-tanf}</label><br />-->
+<!--              <input type="checkbox" name="type3" id="message" value="message" /><label for="message">Message us</label><br />-->
+<!--              </div>-->
+<!--              <div>-->
+<!--                <button type="submit">Submit</button>-->
+<!--              </div>-->
+<!--            </fieldset>-->
+
+<!--          </div>-->
+
+
+<!--  <div class="spacing-below-35">-->
+<!--    <th:block th:replace="~{fragments/inputs/checkboxFieldset ::-->
+<!--          checkboxFieldset(inputName='benefitElection',-->
+<!--          label=#{index.benefit-election},-->
+<!--          content=~{::selectBenefits})}">-->
+<!--      <th:block th:ref="selectBenefits">-->
+
+<!--        <th:block-->
+<!--            th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='benefitElection',value='SNAP', label=#{index.benefit-snap})}"/>-->
+<!--        <th:block-->
+<!--            th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='benefitElection',value='TANF', label=#{index.benefit-tanf})}"/>-->
+<!--      </th:block>-->
+<!--    </th:block>-->
+<!--    <a-->
+<!--      th:href="|/flow/mdpilot/howThisWorks?lang=${#locale.getLanguage()}|"-->
+<!--      th:text="#{index.apply-now}"-->
+<!--      class="button&#45;&#45;primary button"></a>-->
+<!--  </div>-->
+  <!--
+          <div class="spacing-below-35">
+            <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                  checkboxFieldset(inputName='benefitElection',
+                  label=#{index.benefit-election},
+                  content=~{::selectBenefits})}">
+              <th:block th:ref="selectBenefits">
+
+                <th:block
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='benefitElection',value='SNAP', label=#{index.benefit-snap})}"/>
+                <th:block
+                    th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='benefitElection',value='TANF', label=#{index.benefit-tanf})}"/>
+              </th:block>
+            </th:block>
+            <a
+              th:href="|/flow/mdpilot/howThisWorks?lang=${#locale.getLanguage()}|"
+              th:text="#{index.apply-now}"
+              class="button--primary button"></a>
+          </div>
+        -->
+
         </div>
         <div class="width-one-half">
           <img src="/assets/images/ubi-landing-splash.png" alt="" class="nudge--large">

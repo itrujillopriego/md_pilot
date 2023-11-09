@@ -1,0 +1,80 @@
+
+<!--<!DOCTYPE html>-->
+<!--<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head th:replace="~{fragments/head :: head(title='Eligibility')}"></head>-->
+<!--<body>-->
+<!--<div class="page-wrapper">-->
+<!--  <div th:replace="~{fragments/toolbar :: toolbar}"></div>-->
+<!--  <section class="slab">-->
+<!--    <div class="grid">-->
+<!--      <div th:replace="~{fragments/goBack :: goBackLink}"></div>-->
+<!--      <main id="content" role="main" class="form-card spacing-above-35">-->
+<!--        <div class="text&#45;&#45;centered">-->
+<!--          <th:block th:replace="~{fragments/icons :: household}"/>-->
+<!--          <p class="text&#45;&#45;grey-dark" th:text="#{eligibility.step}"></p>-->
+<!--          <th:block-->
+<!--              th:replace="~{fragments/cardHeader :: cardHeader(header=#{eligibility.eligibility})}"/>-->
+<!--        </div>-->
+
+
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title=#{benefitOptions.title})}"></head>
+<body>
+<div class="page-wrapper">
+  <div th:replace="~{fragments/toolbar :: toolbar}"></div>
+  <section class="slab">
+    <div class="grid">
+      <div th:replace="~{fragments/goBack :: goBackLink}"></div>
+      <main id="content" role="main" class="form-card spacing-above-35">
+        <th:block
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{benefitOptions.selections}, subtext=#{benefitOptions.information})}"/>
+          <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::b})}">
+            <th:block th:ref="b">
+              <div class="form-card__content">
+                <th:block th:replace="~{fragments/inputs/checkboxFieldset ::
+                    checkboxFieldset(inputName='benefitElection',
+                    label=#{benefitOptions.selections},
+                    helpText=#{benefitOptions.information},
+                    content=~{::a})}">
+                  <th:block th:ref="a">
+                    <!-- Copy the below input if you want to add more -->
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='benefitElection',value='SNAP', label=#{benefitOptions.selection-snap})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='benefitElection',value='TANF', label=#{benefitOptions.selection-tanf})}"/>
+                    <th:block
+                        th:replace="~{fragments/inputs/checkboxInSet :: checkboxInSet(inputName='benefitElection',value='TCA', label=#{benefitOptions.selection-tca})}"/>
+
+                  </th:block>
+                </th:block>
+
+              </div>
+            <div class="form-card__footer">
+              <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
+                  text=#{general.inputs.continue})}"/>
+            </div>
+          </th:block>
+        </th:block>
+      </main>
+    </div>
+  </section>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}" />
+</body>
+</html>
+
+        
+
+
+
+<!--<th:block th:replace="~{fragments/continueButton :: continue}" />-->
+
+
+
+
+
+
+
+
+

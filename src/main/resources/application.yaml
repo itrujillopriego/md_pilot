@@ -69,9 +69,14 @@ spring:
       static-locations: file:src/main/resources/static/
       cache:
         period: 0
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/starter-app
+#    username: starter-app
+#    password:
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/starter-app
-    username: starter-app
+    url: jdbc:postgresql://localhost:5432/md_test
+    username: md-app
     password:
   servlet:
     multipart:
@@ -87,6 +92,11 @@ server:
   error:
     whitelabel:
       enabled: false
+  server:
+    servlet:
+      session:
+        cookie:
+          max-age=72H:
 management:
   endpoints:
     enabled-by-default: false
