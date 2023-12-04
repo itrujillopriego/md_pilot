@@ -164,8 +164,12 @@ flow:
     nextScreens:
       - name: snapInfo
         condition: SnapSelected
+      - name : tanfInfo
+        condition: TanfSelected
       - name: languagePreference
-
+  snapInfo:
+    nextScreens:
+      - name: languagePreference
   howThisWorks:
     nextScreens:
       - name: benefitOptions
