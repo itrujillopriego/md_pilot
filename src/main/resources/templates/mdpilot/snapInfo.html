@@ -9,12 +9,11 @@
       <div th:replace="~{fragments/goBack :: goBackLink}"></div>
       <main id="content" role="main" class="form-card spacing-above-35">
         <th:block
-            th:replace="~{fragments/cardHeader :: cardHeader(header=#{}, subtext=#{})}"/>
+            th:replace="~{fragments/cardHeader :: cardHeader(header=#{benefitOptions.selection-snap}, subtext=#{benefitOptions.information})}"/>
           <th:block th:replace="~{fragments/form :: form(action=${formAction}, content=~{::var})}">
             <th:block th:ref="var">
               <div class="form-card__content">
-                <h1 class="spacing-below-35 spacing-above-5" th:text="SNAP test"></h1>
-                <p th:text="Checking that the conditional flow works for SNAP"></p>
+                <h1>This is snap</h1>
               </div>
             <div class="form-card__footer">
               <th:block th:replace="~{fragments/inputs/submitButton :: submitButton(
@@ -29,3 +28,6 @@
 <th:block th:replace="~{fragments/footer :: footer}" />
 </body>
 </html>
+
+
+

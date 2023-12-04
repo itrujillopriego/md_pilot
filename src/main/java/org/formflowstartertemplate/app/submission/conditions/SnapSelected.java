@@ -10,18 +10,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SnapSelected implements Condition{
+
   @Override
-  public Boolean run(Submission submission, String data) {
-    if (submission.getInputData().containsKey("benefitElection")) {
-      // Change logic to suit your needs
-      var incomeArr = (ArrayList<Map<String, Object>>) submission.getInputData().get("benefitElection");
-      Map<String, Object> benefitSelection = incomeArr.stream()
-          .filter(entry -> entry.get("uuid").equals(data))
-          .toList()
-          .get(0);
-      return benefitSelection.get("benefitElection").equals("SNAP"); // should be true here ..
+  public Boolean run(Submission submission) {
+    var inputData = submission.getInputData();
+    if (inputData.containsKey("benefitElection[]")) {
+      var programArr = (ArrayList<String>) submission.getInputData().get("benefitElection[]");
+      return programArr.contains("SNAP");
     }
     return false;
-
   }
+
 }
+
+
